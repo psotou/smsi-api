@@ -21,12 +21,12 @@ func (app *application) showProductHandler(w http.ResponseWriter, r *http.Reques
 
 	// New instance of the Product struct
 	product := data.Product{
-		ID:        id,
-		CreatedAt: time.Now(),
-		Name:      "boquilla niebla seca",
+		ID:          id,
+		Name:        "MJ230SS",
+		Description: "Boquilla misting example",
+		CreatedAt:   time.Now(),
 	}
-
-	err = app.writeJSON(w, http.StatusOK, product, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"product": product}, nil)
 	if err != nil {
 		app.logger.Println(err)
 		http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
