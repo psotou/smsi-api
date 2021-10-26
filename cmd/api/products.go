@@ -15,7 +15,7 @@ func (app *application) createProductHandler(w http.ResponseWriter, r *http.Requ
 func (app *application) showProductHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := app.realIDParam(r)
 	if err != nil {
-		http.NotFound(w, r)
+		app.notFoundResponse(w, r)
 		return
 	}
 
@@ -28,7 +28,6 @@ func (app *application) showProductHandler(w http.ResponseWriter, r *http.Reques
 	}
 	err = app.writeJSON(w, http.StatusOK, envelope{"product": product}, nil)
 	if err != nil {
-		app.logger.Println(err)
-		http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
 	}
 }
